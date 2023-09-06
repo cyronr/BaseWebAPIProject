@@ -1,0 +1,1 @@
+# Base WebAPI Project in Clean Architecture with implemented authentication

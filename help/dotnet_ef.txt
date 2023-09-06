@@ -1,0 +1,6 @@
+cd Infrastructure
+
+dotnet ef migrations add <<Migration_Name>> --startup-project "C:\_Project\BaseWebAPIWithAuth_PostgreSQL\WebAPI\WebAPI.csproj"
+dotnet ef migrations remove --startup-project "C:\_Project\BaseWebAPIWithAuth_PostgreSQL\WebAPI\WebAPI.csproj"
+
+dotnet ef database update --startup-project "C:\_Project\BaseWebAPIWithAuth_PostgreSQL\WebAPI\WebAPI.csproj"
