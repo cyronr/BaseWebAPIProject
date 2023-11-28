@@ -7,7 +7,7 @@ namespace Infrastructure.DataAccess.Common
 {
     public class InternalDbTransaction : IInternalDbTransaction
     {
-        private IDbContextTransaction _transaction;
+        private readonly IDbContextTransaction _transaction;
 
         public InternalDbTransaction(DataContext context)
         {

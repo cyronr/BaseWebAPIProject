@@ -17,10 +17,10 @@ public class MockProfileRepository
             {
                 Id = 1,
                 UUID = Guid.Parse(Consts.Active_Admin_Profile_UUID),
-                StatusId = ProfileStatus.Status.Active,
+                StatusId = ProfileStatus.Active,
                 Status = new ProfileStatus
                 {
-                    Id = ProfileStatus.Status.Active,
+                    Id = ProfileStatus.Active,
                     Name = "Active"
                 },
                 TypeId = ProfileType.Type.Admin,
@@ -36,10 +36,10 @@ public class MockProfileRepository
             {
                 Id = 2,
                 UUID = Guid.NewGuid(),
-                StatusId = ProfileStatus.Status.Active,
+                StatusId = ProfileStatus.Active,
                 Status = new ProfileStatus
                 {
-                    Id = ProfileStatus.Status.Active,
+                    Id = ProfileStatus.Active,
                     Name = "Active"
                 },
                 TypeId = ProfileType.Type.Doctor,
@@ -55,10 +55,10 @@ public class MockProfileRepository
             {
                 Id = 3,
                 UUID = Guid.NewGuid(),
-                StatusId = ProfileStatus.Status.Active,
+                StatusId = ProfileStatus.Active,
                 Status = new ProfileStatus
                 {
-                    Id = ProfileStatus.Status.Active,
+                    Id = ProfileStatus.Active,
                     Name = "Active"
                 },
                 TypeId = ProfileType.Type.Facility,
@@ -74,10 +74,10 @@ public class MockProfileRepository
             {
                 Id = 4,
                 UUID = Guid.NewGuid(),
-                StatusId = ProfileStatus.Status.Active,
+                StatusId = ProfileStatus.Active,
                 Status = new ProfileStatus
                 {
-                    Id = ProfileStatus.Status.Active,
+                    Id = ProfileStatus.Active,
                     Name = "Active"
                 },
                 TypeId = ProfileType.Type.Patient,

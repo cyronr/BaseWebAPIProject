@@ -1,18 +1,15 @@
-﻿namespace Domain.Models.ProfileModels
+﻿namespace Domain.Models.ProfileModels;
+
+public class ProfileStatusModel
 {
-    public class ProfileStatus
-    {
-        public enum Status
-        {
-            Prepared = 1,
-            Active = 2,
-            Locked = 3,
-            Deleted = 4
-        }
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
 
-        public Status Id { get; set; }
-        public string Name { get; set; }
-
-        public List<Profile> Profiles { get; set; }
-    }
+public enum ProfileStatus
+{
+    Prepared = 1,
+    Active = 2,
+    Locked = 3,
+    Deleted = 4
 }

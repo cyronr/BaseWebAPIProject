@@ -8,9 +8,9 @@ namespace Application.Common.AppProfile
 
         public Guid Id { get; }
         public string Email { get; } = null!;
-        public ProfileStatus.Status Status { get; }
-        public ProfileType.Type Type { get; }
-        public bool IsAdmin { get => this.Type == ProfileType.Type.Admin ? true : false; }
+        public ProfileStatus Status { get; }
+        public ProfileType Type { get; }
+        public bool IsAdmin { get => this.Type == ProfileType.Admin ? true : false; }
 
         private CallerProfile(ICurrentLoggedProfile currentLoggedProfile)
         {
@@ -20,8 +20,8 @@ namespace Application.Common.AppProfile
             {
                 this.Id = _currentLoggedProfile.UUID;
                 this.Email = _currentLoggedProfile.Email;
-                this.Status = _currentLoggedProfile.StatusId;
-                this.Type = _currentLoggedProfile.TypeId;
+                this.Status = _currentLoggedProfile.Status;
+                this.Type = _currentLoggedProfile.Type;
 
                 this.profileEntity = _currentLoggedProfile;
             }

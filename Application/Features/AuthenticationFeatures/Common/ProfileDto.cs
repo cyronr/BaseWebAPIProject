@@ -7,6 +7,6 @@ namespace Application.Features.AuthenticationFeatures.Common
         public Guid Id { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public ProfileType.Type ProfileType { get; set; }
-    }
+        public ProfileType ProfileType { get; set; }
+    }   
 }

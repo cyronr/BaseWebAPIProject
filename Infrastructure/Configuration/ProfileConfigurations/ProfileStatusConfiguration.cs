@@ -2,30 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Configuration.ProfileConfigurations
+namespace Infrastructure.Data.Configuration.ProfileConfigurations;
+
+public class ProfileStatusConfiguration : IEntityTypeConfiguration<ProfileStatusModel>
 {
-    public class ProfileStatusConfiguration : IEntityTypeConfiguration<ProfileStatus>
+    public void Configure(EntityTypeBuilder<ProfileStatusModel> builder)
     {
-        public void Configure(EntityTypeBuilder<ProfileStatus> builder)
-        {
-            builder.Property(p => p.Name).HasMaxLength(50);
+        builder.Property(p => p.Name).HasMaxLength(50);
 
-            builder
-                .HasMany(s => s.Profiles)
-                .WithOne(o => o.Status)
-                .HasForeignKey(s => s.StatusId)
-                .OnDelete(DeleteBehavior.NoAction);
+        /*builder
+            .HasMany(s => s.Profiles)
+            .WithOne(o => o.Status)
+            .HasForeignKey(s => s.StatusId)
+            .OnDelete(DeleteBehavior.NoAction);*/
 
-            builder
-                .HasData(
-                    Enum.GetValues(typeof(ProfileStatus.Status))
-                        .Cast<ProfileStatus.Status>()
-                        .Select(e => new ProfileStatus()
-                        {
-                            Id = e,
-                            Name = e.ToString()
-                        })
-            );
-        }
+        builder.HasData( Enum.GetValues(typeof(ProfileStatus))
+            .Cast<ProfileStatus>()
+            .Select(e => new ProfileStatusModel()
+            {
+                Id = Convert.ToInt32(e),
+                Name = e.ToString()
+            }));
     }
 }

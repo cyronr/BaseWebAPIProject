@@ -11,7 +11,7 @@ namespace Application.Common.Mapping
             ///Profiles
             CreateMap<ProfileEntity, ProfileDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.UUID))
-                .ForMember(d => d.ProfileType, opt => opt.MapFrom(s => s.TypeId));
+                .ForMember(d => d.ProfileType, opt => opt.MapFrom(s => s.Type));
         }
     }
 }

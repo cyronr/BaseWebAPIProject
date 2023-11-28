@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -47,20 +47,16 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("StatusId")
+                    b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TypeId")
+                    b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.Property<Guid>("UUID")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StatusId");
-
-                    b.HasIndex("TypeId");
 
                     b.ToTable("Profiles");
                 });
@@ -77,33 +73,29 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("CallerProfileId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("ProfileId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("TypeId")
+                    b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CallerProfileId");
-
                     b.HasIndex("ProfileId");
-
-                    b.HasIndex("TypeId");
 
                     b.ToTable("ProfileEvents");
                 });
 
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileEventType", b =>
+            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileEventTypeModel", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -132,10 +124,13 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileStatus", b =>
+            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileStatusModel", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -169,10 +164,13 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileType", b =>
+            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileTypeModel", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -187,90 +185,23 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Facility"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Patient"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Doctor"
-                        },
-                        new
-                        {
-                            Id = 4,
                             Name = "Admin"
                         });
                 });
 
-            modelBuilder.Entity("Domain.Models.ProfileModels.Profile", b =>
-                {
-                    b.HasOne("Domain.Models.ProfileModels.ProfileStatus", "Status")
-                        .WithMany("Profiles")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.ProfileModels.ProfileType", "Type")
-                        .WithMany("Profiles")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Status");
-
-                    b.Navigation("Type");
-                });
-
             modelBuilder.Entity("Domain.Models.ProfileModels.ProfileEvent", b =>
                 {
-                    b.HasOne("Domain.Models.ProfileModels.Profile", "CallerProfile")
-                        .WithMany("CallerProfileEvents")
-                        .HasForeignKey("CallerProfileId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("Domain.Models.ProfileModels.Profile", "Profile")
                         .WithMany("Events")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.ProfileModels.ProfileEventType", "Type")
-                        .WithMany("Events")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("CallerProfile");
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Profile");
-
-                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Domain.Models.ProfileModels.Profile", b =>
                 {
-                    b.Navigation("CallerProfileEvents");
-
                     b.Navigation("Events");
-                });
-
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileEventType", b =>
-                {
-                    b.Navigation("Events");
-                });
-
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileStatus", b =>
-                {
-                    b.Navigation("Profiles");
-                });
-
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileType", b =>
-                {
-                    b.Navigation("Profiles");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,6 +4,7 @@ using Application.Common.AppProfile;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Net.NetworkInformation;
 
 namespace Application
 {
@@ -17,7 +18,7 @@ namespace Application
             services.AddValidatorsFromAssemblyContaining<Application>();
 
             services.AddAutoMapper(typeof(Application).Assembly);
-            services.AddMediatR(typeof(Application).GetTypeInfo().Assembly);
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application).Assembly));
 
             return services;
         }

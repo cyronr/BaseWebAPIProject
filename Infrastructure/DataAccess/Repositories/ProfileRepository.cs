@@ -24,14 +24,14 @@ namespace Infrastructure.DataAccess.Repositories
 
         public void CreateEvent(ProfileEvent profileEvent)
         {
-            _logger.LogInformation($"Saving to database event {profileEvent.TypeId} for profile with id = {profileEvent.Profile.Id}.");
+            _logger.LogInformation($"Saving to database event {profileEvent.Type} for profile with id = {profileEvent.Profile.Id}.");
             _context.ProfileEvents.Add(profileEvent);
         }
 
         public async Task<Profile?> GetByEmailAsync(string email)
         {
             return await _context.Profiles
-                .FirstOrDefaultAsync(p => p.StatusId != ProfileStatus.Status.Deleted && p.Email == email);
+                .FirstOrDefaultAsync(p => p.Status != ProfileStatus.Deleted && p.Email == email);
         }
 
         public async Task<Profile?> GetByUUIDAsync(Guid uuid)
@@ -40,7 +40,7 @@ namespace Infrastructure.DataAccess.Repositories
                 .Include(p => p.Status)
                 .Include(p => p.Type)
                 .Include(p => p.Events)
-                .FirstOrDefaultAsync(p => p.StatusId != ProfileStatus.Status.Deleted && p.UUID == uuid);
+                .FirstOrDefaultAsync(p => p.Status != ProfileStatus.Deleted && p.UUID == uuid);
         }
 
         public Profile? GetByUUID(Guid uuid)
@@ -49,7 +49,7 @@ namespace Infrastructure.DataAccess.Repositories
                 .Include(p => p.Status)
                 .Include(p => p.Type)
                 .Include(p => p.Events)
-                .FirstOrDefault(p => p.StatusId != ProfileStatus.Status.Deleted && p.UUID == uuid);
+                .FirstOrDefault(p => p.Status != ProfileStatus.Deleted && p.UUID == uuid);
         }
 
 

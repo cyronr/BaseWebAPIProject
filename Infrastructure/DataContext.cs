@@ -18,10 +18,10 @@ namespace Infrastructure.Data
 
         //Profiles
         public DbSet<Profile> Profiles { get; set; }
-        public DbSet<ProfileStatus> ProfileStatus { get; set; }
-        public DbSet<ProfileType> ProfileType { get; set; }
+        public DbSet<ProfileStatusModel> ProfileStatus { get; set; }
+        public DbSet<ProfileTypeModel> ProfileType { get; set; }
         public DbSet<ProfileEvent> ProfileEvents { get; set; }
-        public DbSet<ProfileEventType> ProfileEventType { get; set; }
+        public DbSet<ProfileEventTypeModel> ProfileEventType { get; set; }
 
        
 

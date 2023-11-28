@@ -1,18 +1,12 @@
-﻿namespace Domain.Models.ProfileModels
+﻿namespace Domain.Models.ProfileModels;
+
+public class ProfileTypeModel
 {
-    public class ProfileType
-    {
-        public enum Type
-        {
-            Facility = 1,
-            Patient = 2,
-            Doctor = 3,
-            Admin = 4
-        }
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
 
-        public Type Id { get; set; }
-        public string Name { get; set; }
-
-        public List<Profile> Profiles { get; set; }
-    }
+public enum ProfileType
+{
+    Admin = 1
 }

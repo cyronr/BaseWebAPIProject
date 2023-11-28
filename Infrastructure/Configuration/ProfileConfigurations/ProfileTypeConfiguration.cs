@@ -2,30 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Configuration.ProfileConfigurations
+namespace Infrastructure.Data.Configuration.ProfileConfigurations;
+
+public class ProfileTypeConfiguration : IEntityTypeConfiguration<ProfileTypeModel>
 {
-    public class ProfileTypeConfiguration : IEntityTypeConfiguration<ProfileType>
+    public void Configure(EntityTypeBuilder<ProfileTypeModel> builder)
     {
-        public void Configure(EntityTypeBuilder<ProfileType> builder)
-        {
-            builder.Property(p => p.Name).HasMaxLength(50);
+        builder.Property(p => p.Name).HasMaxLength(50);
 
-            builder
-                .HasMany(s => s.Profiles)
-                .WithOne(o => o.Type)
-                .HasForeignKey(s => s.TypeId)
-                .OnDelete(DeleteBehavior.NoAction);
+        /* builder
+             .HasMany(s => s.Profiles)
+             .WithOne(o => o.Type)
+             .HasForeignKey(s => s.TypeId)
+             .OnDelete(DeleteBehavior.NoAction);*/
 
-            builder
-                .HasData(
-                    Enum.GetValues(typeof(ProfileType.Type))
-                        .Cast<ProfileType.Type>()
-                        .Select(e => new ProfileType()
-                        {
-                            Id = e,
-                            Name = e.ToString()
-                        })
-            );
-        }
+        builder.HasData(Enum.GetValues(typeof(ProfileType))
+            .Cast<ProfileType>()
+            .Select(e => new ProfileTypeModel()
+            {
+                Id = Convert.ToInt32(e),
+                Name = e.ToString()
+            }));
     }
 }

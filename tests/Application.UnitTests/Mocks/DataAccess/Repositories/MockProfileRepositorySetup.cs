@@ -11,13 +11,13 @@ public static class MockProfileRepositorySetup
         mockRepo.Setup(r => r.GetByUUIDAsync(It.IsAny<Guid>()))
             .ReturnsAsync((Guid uuid) =>
             {
-                return mockProfiles.FirstOrDefault(d => d.UUID == uuid && d.StatusId != ProfileStatus.Status.Deleted);
+                return mockProfiles.FirstOrDefault(d => d.UUID == uuid && d.StatusId != ProfileStatus.Deleted);
             });
 
         mockRepo.Setup(r => r.GetByEmailAsync(It.IsAny<string>()))
             .ReturnsAsync((string email) =>
             {
-                return mockProfiles.FirstOrDefault(d => d.Email == email && d.StatusId != ProfileStatus.Status.Deleted);
+                return mockProfiles.FirstOrDefault(d => d.Email == email && d.StatusId != ProfileStatus.Deleted);
             });
 
         mockRepo.Setup(r => r.Create(It.IsAny<Profile>()))

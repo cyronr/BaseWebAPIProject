@@ -7,12 +7,7 @@ public static class MockCurrentLoggedProfile
         {
             Id = 1,
             UUID = uuid is not null ? (Guid)uuid : Guid.NewGuid(),
-            StatusId = ProfileStatus.Status.Active,
-            Status = new ProfileStatus
-            {
-                Id = ProfileStatus.Status.Active,
-                Name = "Active"
-            },
+            Status = ProfileStatus.Active,
             TypeId = ProfileType.Type.Admin,
             Type = new ProfileType
             {

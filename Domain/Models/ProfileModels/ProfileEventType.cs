@@ -1,17 +1,14 @@
-﻿namespace Domain.Models.ProfileModels
+﻿namespace Domain.Models.ProfileModels;
+
+public class ProfileEventTypeModel
 {
-    public class ProfileEventType
-    {
-        public enum Type
-        {
-            Created = 1,
-            Updated = 2,
-            Deleted = 3
-        }
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
 
-        public Type Id { get; set; }
-        public string Name { get; set; }
-
-        public List<ProfileEvent> Events { get; set; }
-    }
+public enum ProfileEventType
+{
+    Created = 1,
+    Updated = 2,
+    Deleted = 3
 }
