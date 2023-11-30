@@ -5,11 +5,11 @@ using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Data
 {
-    public class DataContext : DbContext
+    public class AppDbContext : DbContext
     {
         private readonly ConnectionStrings _connectionStrings;
 
-        public DataContext(DbContextOptions<DataContext> options, IOptions<ConnectionStrings> connectionOptions) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options, IOptions<ConnectionStrings> connectionOptions) : base(options)
         {
             _connectionStrings = connectionOptions.Value;
         }
@@ -32,7 +32,7 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
     }
 }

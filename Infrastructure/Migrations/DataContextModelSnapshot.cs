@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -58,7 +58,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.ProfileModels.ProfileEvent", b =>
@@ -86,7 +86,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("ProfileEvents");
+                    b.ToTable("ProfileEvents", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.ProfileModels.ProfileEventTypeModel", b =>
@@ -104,7 +104,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProfileEventType");
+                    b.ToTable("ProfileEventType", (string)null);
 
                     b.HasData(
                         new
@@ -139,7 +139,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProfileStatus");
+                    b.ToTable("ProfileStatus", (string)null);
 
                     b.HasData(
                         new
@@ -179,7 +179,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProfileType");
+                    b.ToTable("ProfileType", (string)null);
 
                     b.HasData(
                         new
@@ -194,7 +194,8 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.ProfileModels.Profile", "Profile")
                         .WithMany("Events")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Profile");
                 });

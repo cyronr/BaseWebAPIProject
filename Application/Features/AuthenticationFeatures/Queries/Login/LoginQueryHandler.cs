@@ -1,13 +1,12 @@
 ﻿
 using AutoMapper;
 using Application.Common.Authentication;
-using Application.DataAccess.Repositories;
 using Application.Features.AuthenticationFeatures.Common;
-using Application.ModelsExtensions.ProfileModelsExtensions;
 using Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Profile = Domain.Models.ProfileModels.Profile;
+using Application.Persistence.Repositories;
 
 namespace Application.Features.AuthenticationFeatures.Queries.Login
 {
@@ -38,7 +37,7 @@ namespace Application.Features.AuthenticationFeatures.Queries.Login
             _logger.LogDebug($"Logging profile ${query.Email}.");
 
             _logger.LogDebug($"Fetching profile by email {query.Email}.");
-            var profile = await new Profile().GetByEmailAsync(_profileRepository, query.Email);
+            var profile = Profile.Create();//await new Profile().GetByEmailAsync(_profileRepository, query.Email);
 
             if (!_passwordHasher.VerifyPassword(query.Password, profile.PasswordHash, profile.PasswordSalt))
                 throw new WrongPasswordException("Wrong password.");

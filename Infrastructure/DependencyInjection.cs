@@ -1,15 +1,15 @@
 ﻿using Application.Common.Authentication;
 using Application.Common.Http;
 using Application.Common.MessageSenders;
-using Application.DataAccess.Common;
-using Application.DataAccess.Repositories;
+using Application.Persistence;
+using Application.Persistence.Repositories;
 using Infrastructure.Common;
 using Infrastructure.Common.Authentication;
 using Infrastructure.Common.Http;
 using Infrastructure.Common.MessageSenders;
 using Infrastructure.Data;
-using Infrastructure.DataAccess.Common;
-using Infrastructure.DataAccess.Repositories;
+using Infrastructure.Persistence;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,7 +24,7 @@ namespace Infrastructure
             services.ConfigureRepositoriesDependencyInjection();
             services.ConfigureCommonDependencyInjection();
 
-            services.AddDbContext<DataContext>();
+            services.AddDbContext<AppDbContext>();
 
             return services;
         }
@@ -40,8 +40,8 @@ namespace Infrastructure
 
         private static IServiceCollection ConfigureRepositoriesDependencyInjection(this IServiceCollection services)
         {
-            services.AddScoped<IDbOperation, DbOperation>();
-            services.AddScoped<IInternalDbTransaction, InternalDbTransaction>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IProfileRepository, ProfileRepository>();
 
             return services;

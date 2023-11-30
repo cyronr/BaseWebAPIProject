@@ -1,4 +1,4 @@
-﻿using Application.DataAccess.Repositories;
+﻿using Application.Persistence.Repositories;
 using Domain.Exceptions;
 using Domain.Models.ProfileModels;
 

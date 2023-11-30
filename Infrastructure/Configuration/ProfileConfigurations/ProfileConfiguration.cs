@@ -12,9 +12,8 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
         builder.Property(p => p.Email).HasMaxLength(150);
         builder.Property(p => p.PhoneNumber).HasMaxLength(20);
 
-        builder.HasMany(s => s.Events)
-            .WithOne(t => t.Profile)
-            .IsRequired(false)
-            .OnDelete(DeleteBehavior.NoAction);
+        builder.HasMany(p => p.Events)
+            .WithOne()
+            .IsRequired();
     }
 }

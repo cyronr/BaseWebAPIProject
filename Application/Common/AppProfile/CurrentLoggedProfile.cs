@@ -1,5 +1,4 @@
-﻿using Application.DataAccess.Repositories;
-using Domain.Models.ProfileModels;
+﻿using Domain.Models.ProfileModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
@@ -10,23 +9,26 @@ namespace Application.Common.AppProfile
     {
         private readonly ILogger<CurrentLoggedProfile> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IProfileRepository _profileRepository;
+        
 
-        public CurrentLoggedProfile(ILogger<CurrentLoggedProfile> logger, IHttpContextAccessor httpContextAccessor, IProfileRepository profileRepository)
+        public CurrentLoggedProfile(ILogger<CurrentLoggedProfile> logger, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
-            _profileRepository = profileRepository;
         }
 
         public Profile? GetCurrentLoggedProfile()
         {
-            _logger.LogInformation("Try getting logged user.");
+            throw new NotImplementedException();
+            /*_logger.LogInformation("Try getting logged user.");
+            /*_logger.LogInformation("Try getting logged user.");
+            /*_logger.LogInformation("Try getting logged user.");
+            /*_logger.LogInformation("Try getting logged user.");
             var loggerUserUUID = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (loggerUserUUID is null)
                 return null;
 
-            return _profileRepository.GetByUUID(Guid.Parse(loggerUserUUID));
+            return _profileRepository.GetByUUID(Guid.Parse(loggerUserUUID));*/
         }
     }
 }

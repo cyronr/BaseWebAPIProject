@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231128183141_Initial")]
-    partial class Initial
+    [Migration("20231129172149_ProfilesFixes")]
+    partial class ProfilesFixes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,7 +197,8 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.ProfileModels.Profile", "Profile")
                         .WithMany("Events")
                         .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Profile");
                 });

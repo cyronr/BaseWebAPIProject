@@ -2,7 +2,16 @@ using Domain.Models.BaseModels;
 
 namespace Domain.Models.ProfileModels;
 
-public class ProfileEvent : BaseEvent<ProfileEventType>
+public class ProfileEvent : EventEntity<ProfileEventType>
 {
-    public Profile Profile { get; set; }
+    private ProfileEvent() { } //For EF Core
+    private ProfileEvent(ProfileEventType eventType) 
+    {
+        Type = eventType;
+    }
+
+    public static ProfileEvent Create(ProfileEventType eventType)
+    {
+        return new ProfileEvent(eventType);
+    }
 }
