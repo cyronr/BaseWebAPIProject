@@ -1,5 +1,7 @@
 using Domain.Models.BaseModels;
-using System.Data;
+using Domain.ModelsUpdateParams;
+using Mapster;
+using System.Net.Mail;
 
 namespace Domain.Models.ProfileModels;
 
@@ -11,17 +13,46 @@ public class Profile : Entity<Profile, ProfileStatus, ProfileEvent>
     public byte[] PasswordHash { get; private set; } = null!;
     public string? PhoneNumber { get; private set; }
 
-    private Profile() : base() 
-    {
-    }
+    private Profile() : base() { }
 
-    public static Profile Create()
+    #region public methods
+    public static Profile Create(string email, ProfileType type)
     {
         Profile profile = new Profile();
 
+        if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
+            throw new Exceptions.InvalidDataException("Email is not valid.");
+
+        profile.Email = email;
+        profile.Type = type;
         profile.UpdateStatus(ProfileStatus.Prepared);
-        profile.Events.Add(ProfileEvent.Create(ProfileEventType.Created));
+        profile.AddEvent(ProfileEventType.Created, profile.ToString());
 
         return profile;
     }
+
+    public void Update(ProfileUpdateParams updateParams)
+    {
+        TypeAdapter.Adapt(updateParams, this, ProfileUpdateParams.GetMappingConfig());
+    }
+
+    public void AddEvent(ProfileEvent profileEvent) => Events.Add(profileEvent);
+
+    public void AddEvent(ProfileEventType eventType, string? addInfo = default) => AddEvent(ProfileEvent.Create(eventType, addInfo));
+    #endregion
+
+    #region private methods
+    private static bool IsValidEmail(string email)
+    {
+        try
+        {
+            new MailAddress(email);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    #endregion
 }

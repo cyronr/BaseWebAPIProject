@@ -7,29 +7,31 @@ namespace Infrastructure.Persistence;
 
 internal partial class UnitOfWork : IUnitOfWork
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly AppDbContext _appDbContext;
+    private readonly IRepositoryFactory _repositoryFactory;
 
-    public UnitOfWork(IServiceProvider serviceProvider, AppDbContext appDbContext)
+    private readonly Dictionary<Type, IRepository> _repositories = new Dictionary<Type, IRepository>();
+
+    public UnitOfWork(AppDbContext appDbContext, IRepositoryFactory repositoryFactory)
     {
-        _serviceProvider = serviceProvider;
         _appDbContext = appDbContext;
+        _repositoryFactory = repositoryFactory;
     }
 
     public IRepository<TEntity> GetRepository<TEntity>() where TEntity : Entity
     {
-        return (IRepository<TEntity>)_serviceProvider.GetService(typeof(IRepository<TEntity>)) ?? throw new Exception($"Could not get repository for {typeof(TEntity)}");
+        Type type = typeof(TEntity);
+        if (_repositories.TryGetValue(type, out IRepository? repository))
+            return repository as IRepository<TEntity> ?? throw new Exception($"Could not cast repository to IRepository<{type}>");
+
+        repository = _repositoryFactory.GetRepository<TEntity>();
+        _repositories.Add(type, repository);
+        return repository as IRepository<TEntity> ?? throw new Exception($"Could not cast repository to IRepository<{type}>");
     }
 
-    public async Task CommitAsync()
+    public async Task SaveChangesAsync()
     {
         await _appDbContext.SaveChangesAsync();
-    }
-
-    public Task RollbackAsync()
-    {
-        //DO NOTHING
-        return Task.CompletedTask;
     }
 
     public void Dispose()

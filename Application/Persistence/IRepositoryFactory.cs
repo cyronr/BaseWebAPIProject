@@ -3,8 +3,7 @@ using Domain.Models.BaseModels;
 
 namespace Application.Persistence;
 
-public interface IUnitOfWork : IDisposable
+public interface IRepositoryFactory
 {
-    Task SaveChangesAsync();
     IRepository<TEntity> GetRepository<TEntity>() where TEntity : Entity;
 }

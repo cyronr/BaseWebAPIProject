@@ -14,18 +14,18 @@ namespace Application.Features.AuthenticationFeatures.Queries.Login
     {
         private readonly ILogger<LoginQueryHandler> _logger;
         private readonly IMapper _mapper;
-        private readonly IProfileRepository _profileRepository;
+        //private readonly IProfileRepository _profileRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
         public LoginQueryHandler(
             ILogger<LoginQueryHandler> logger,
             IMapper mapper,
-            IProfileRepository profileRepository,
+            //IProfileRepository profileRepository,
             IPasswordHasher passwordHasher,
             IJwtTokenGenerator jwtTokenGenerator)
         {
-            _profileRepository = profileRepository;
+            //_profileRepository = profileRepository;
             _logger = logger;
             _mapper = mapper;
             _passwordHasher = passwordHasher;
@@ -37,7 +37,7 @@ namespace Application.Features.AuthenticationFeatures.Queries.Login
             _logger.LogDebug($"Logging profile ${query.Email}.");
 
             _logger.LogDebug($"Fetching profile by email {query.Email}.");
-            var profile = Profile.Create();//await new Profile().GetByEmailAsync(_profileRepository, query.Email);
+            var profile = Profile.Create("", Domain.Models.ProfileModels.ProfileType.Admin);//await new Profile().GetByEmailAsync(_profileRepository, query.Email);
 
             if (!_passwordHasher.VerifyPassword(query.Password, profile.PasswordHash, profile.PasswordSalt))
                 throw new WrongPasswordException("Wrong password.");

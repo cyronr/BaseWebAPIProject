@@ -8,8 +8,17 @@
 /// <typeparam name="T"></typeparam>
 public abstract class EventEntity<TType>
 {
-    public int Id { get; set; }
-    public TType Type { get; set; }
-    public string AddInfo { get; set; } = string.Empty;
-    public DateTime Timestamp { get; set; } = DateTime.Now;
+    public int Id { get; private set; }
+    public TType Type { get; private set; }
+    public string? AddInfo { get; private set; } 
+    public DateTime Timestamp { get; private set; }
+
+    protected EventEntity() { }
+
+    protected EventEntity(TType? eventType, string? addInfo = default)
+    {
+        Type = eventType;
+        AddInfo = addInfo;
+        Timestamp = DateTime.UtcNow;
+    }
 }

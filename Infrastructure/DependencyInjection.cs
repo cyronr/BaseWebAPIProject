@@ -3,6 +3,7 @@ using Application.Common.Http;
 using Application.Common.MessageSenders;
 using Application.Persistence;
 using Application.Persistence.Repositories;
+using Domain.Models.ProfileModels;
 using Infrastructure.Common;
 using Infrastructure.Common.Authentication;
 using Infrastructure.Common.Http;
@@ -41,8 +42,9 @@ namespace Infrastructure
         private static IServiceCollection ConfigureRepositoriesDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRepositoryFactory, RepositoryFactory>();
 
-            services.AddScoped<IProfileRepository, ProfileRepository>();
+            services.AddScoped<IRepository<Profile>, ProfileRepository>();
 
             return services;
         }

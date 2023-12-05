@@ -4,14 +4,11 @@ namespace Domain.Models.ProfileModels;
 
 public class ProfileEvent : EventEntity<ProfileEventType>
 {
-    private ProfileEvent() { } //For EF Core
-    private ProfileEvent(ProfileEventType eventType) 
-    {
-        Type = eventType;
-    }
+    private ProfileEvent() : base() { } //For EF Core
+    private ProfileEvent(ProfileEventType eventType, string? addInfo = default) : base(eventType, addInfo) { }
 
-    public static ProfileEvent Create(ProfileEventType eventType)
+    public static ProfileEvent Create(ProfileEventType eventType, string? addInfo = default)
     {
-        return new ProfileEvent(eventType);
+        return new ProfileEvent(eventType, addInfo);
     }
 }

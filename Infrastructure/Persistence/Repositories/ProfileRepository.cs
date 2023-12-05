@@ -18,6 +18,6 @@ internal class ProfileRepository : GenericRepository<Profile>, IProfileRepositor
 
     public async Task<Profile?> GetByEmailAsync(string email)
     {
-        return await _appDbContext.Profiles.FirstOrDefaultAsync(p => p.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+        return await _appDbContext.Profiles.FirstOrDefaultAsync(p => p.Email.ToLower().Equals(email.ToLower()));
     }
 }
