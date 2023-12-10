@@ -1,9 +1,10 @@
 ﻿using Domain.Models.ProfileModels;
 
-namespace Application.Common.AppProfile
+namespace Application.Common.AppProfile;
+
+public interface ICurrentLoggedProfile
 {
-    public interface ICurrentLoggedProfile
-    {
-        Profile? GetCurrentLoggedProfile();
-    }
+    Guid UUID { get; }
+    string Email { get; }
+    ProfileType Type { get; }
 }

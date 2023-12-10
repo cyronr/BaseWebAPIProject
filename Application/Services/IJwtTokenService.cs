@@ -1,9 +1,9 @@
 ﻿using Domain.Models.ProfileModels;
 
-namespace Application.Services
+namespace Application.Services;
+
+public interface IJwtTokenService
 {
-    public interface IJwtTokenService
-    {
-        string GenerateToken(Profile profile);
-    }
+    string GenerateToken(Profile profile);
+    Guid GetProfileUUIDByToken(string token);
 }

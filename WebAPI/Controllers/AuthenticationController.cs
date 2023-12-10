@@ -1,10 +1,12 @@
 ﻿using API.Requests.AuthenticationRequests;
 using API.Requests.AuthenticationResponses;
+using Application.Common.AppProfile;
 using Application.Features.AuthenticationFeatures.Commands.CreateAdminProfile;
 using Application.Features.AuthenticationFeatures.Common;
 using Application.Features.AuthenticationFeatures.Queries.Login;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Requests.AuthenticationRequests;
 
@@ -12,11 +14,12 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("api/auth")]
-public class AuthenticationController(ILogger<AuthenticationController> _logger, IMediator _mediator) : ControllerBase
+public class AuthenticationController(ILogger<AuthenticationController> _logger, IMediator _mediator, ICurrentLoggedProfile currentLoggedProfile) : ControllerBase
 {
     #region DI
     private readonly ILogger<AuthenticationController> _logger = _logger;
     private readonly IMediator _mediator = _mediator;
+    private readonly ICurrentLoggedProfile currentLoggedProfile = currentLoggedProfile;
     #endregion
 
     [HttpPost("login")]

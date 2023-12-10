@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Application.Services.Middleware;
+namespace Application.Middleware;
 
 public partial class ExceptionMiddleware
 {

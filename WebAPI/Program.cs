@@ -5,6 +5,3 @@ builder.Configure();
 
 WebApplication app = builder.Build();
 app.Configure().Run();
-
-
-

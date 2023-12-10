@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace Application.Services.Middleware;
+namespace Application.Middleware;
 
 public partial class ExceptionMiddleware
 {

@@ -1,4 +1,5 @@
 ﻿using Application;
+using Application.Middleware;
 using Domain;
 using FluentValidation;
 using Infrastructure;

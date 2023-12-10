@@ -1,18 +1,17 @@
 using System.Net;
 
-namespace Domain.Exceptions
-{
-    public class AlreadyExistsException : BaseException
-    {
-        public AlreadyExistsException() => SetProperties();
-        public AlreadyExistsException(string message) : base(message) => SetProperties();
-        public AlreadyExistsException(string message, Exception inner) : base(message, inner) => SetProperties();
-        public AlreadyExistsException(string message, string debugMessage) : base(message, debugMessage) => SetProperties();
+namespace Domain.Exceptions;
 
-        private void SetProperties()
-        {
-            Title = "Record already exists.";
-            StatusCode = HttpStatusCode.Conflict;
-        }
+public class AlreadyExistsException : BaseException
+{
+    public AlreadyExistsException() => SetProperties();
+    public AlreadyExistsException(string message) : base(message) => SetProperties();
+    public AlreadyExistsException(string message, Exception inner) : base(message, inner) => SetProperties();
+    public AlreadyExistsException(string message, string debugMessage) : base(message, debugMessage) => SetProperties();
+
+    private void SetProperties()
+    {
+        Title = "Record already exists.";
+        StatusCode = HttpStatusCode.Conflict;
     }
 }

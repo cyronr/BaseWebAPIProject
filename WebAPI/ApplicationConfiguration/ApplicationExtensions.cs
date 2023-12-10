@@ -1,4 +1,4 @@
-﻿using Application.Services.Middleware;
+﻿using Application.Middleware;
 
 namespace WebAPI.ApplicationConfiguration;
 
@@ -25,7 +25,7 @@ internal static class ApplicationExtensions
         application.UseSwaggerUI(c =>
         {
             string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
-            c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "MediReserve API");
+            c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Sample API");
         });
 
         return application;

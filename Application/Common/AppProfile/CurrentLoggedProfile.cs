@@ -1,34 +1,46 @@
-﻿using Domain.Models.ProfileModels;
+﻿using Application.Persistence.Repositories;
+using Application.Persistence;
+using Domain.Models.ProfileModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
+using Domain.Exceptions;
 
-namespace Application.Common.AppProfile
+namespace Application.Common.AppProfile;
+
+public class CurrentLoggedProfile : ICurrentLoggedProfile
 {
-    public class CurrentLoggedProfile : ICurrentLoggedProfile
+    #region DI
+    private readonly ILogger<CurrentLoggedProfile> _logger;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IUnitOfWork _unitOfWork;
+    #endregion
+
+    public Guid UUID { get; private set; }
+    public string Email { get; private set; }
+    public ProfileType Type { get; private set; }
+
+    public CurrentLoggedProfile(ILogger<CurrentLoggedProfile> logger, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
     {
-        private readonly ILogger<CurrentLoggedProfile> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        
+        _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
+        _unitOfWork = unitOfWork;
 
-        public CurrentLoggedProfile(ILogger<CurrentLoggedProfile> logger, IHttpContextAccessor httpContextAccessor)
-        {
-            _logger = logger;
-            _httpContextAccessor = httpContextAccessor;
-        }
+        LoadProfileInfo().GetAwaiter().GetResult();
+    }
 
-        public Profile? GetCurrentLoggedProfile()
-        {
-            throw new NotImplementedException();
-            /*_logger.LogInformation("Try getting logged user.");
-            /*_logger.LogInformation("Try getting logged user.");
-            /*_logger.LogInformation("Try getting logged user.");
-            /*_logger.LogInformation("Try getting logged user.");
-            var loggerUserUUID = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (loggerUserUUID is null)
-                return null;
+    public async Task LoadProfileInfo()
+    {
+        Claim? profileUuidClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
+        if (!Guid.TryParse(profileUuidClaim?.Value, out Guid profileUuid))
+            return;
 
-            return _profileRepository.GetByUUID(Guid.Parse(loggerUserUUID));*/
-        }
+        IProfileRepository profileRepository = _unitOfWork.GetRepository<Profile, IProfileRepository>();
+        Profile currentProfile = await profileRepository.GetByUUIDAsync(profileUuid)
+            ?? throw new AuthenticationException("Incorrect authentication token.", $"Profile with UUID {profileUuid} does not exists.");
+
+        UUID = currentProfile.UUID;
+        Email = currentProfile.Email;
+        Type = currentProfile.Type;
     }
 }
