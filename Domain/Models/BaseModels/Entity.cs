@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Domain.Models.ProfileModels;
+using Newtonsoft.Json;
 using System.Data;
 
 namespace Domain.Models.BaseModels;
@@ -24,6 +25,8 @@ public abstract class Entity<T, TStatus, TEvent> : Entity
     {
         Status = status;
     }
+
+    public void AddEvent(TEvent entityEvent) => Events.Add(entityEvent);
 }
 
 public abstract class Entity

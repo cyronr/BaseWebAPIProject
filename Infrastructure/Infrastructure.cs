@@ -1,6 +1,5 @@
-﻿namespace Infrastructure
+﻿namespace Infrastructure;
+
+public class Infrastructure
 {
-    public class Infrastructure
-    {
-    }
 }

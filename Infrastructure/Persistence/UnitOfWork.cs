@@ -1,32 +1,27 @@
 ﻿using Application.Persistence;
 using Application.Persistence.Repositories;
 using Domain.Models.BaseModels;
-using Infrastructure.Data;
 
 namespace Infrastructure.Persistence;
 
-internal partial class UnitOfWork : IUnitOfWork
+internal partial class UnitOfWork(AppDbContext _appDbContext, 
+    IRepositoryFactory _repositoryFactory) : IUnitOfWork
 {
-    private readonly AppDbContext _appDbContext;
-    private readonly IRepositoryFactory _repositoryFactory;
+    #region DI
+    private readonly AppDbContext _appDbContext = _appDbContext;
+    private readonly IRepositoryFactory _repositoryFactory = _repositoryFactory;
+    #endregion
+    private Dictionary<Type, IRepository> _repositories = new Dictionary<Type, IRepository>();
 
-    private readonly Dictionary<Type, IRepository> _repositories = new Dictionary<Type, IRepository>();
-
-    public UnitOfWork(AppDbContext appDbContext, IRepositoryFactory repositoryFactory)
-    {
-        _appDbContext = appDbContext;
-        _repositoryFactory = repositoryFactory;
-    }
-
-    public IRepository<TEntity> GetRepository<TEntity>() where TEntity : Entity
+    public TRepository GetRepository<TEntity, TRepository>() where TEntity : Entity where TRepository : IRepository<TEntity>
     {
         Type type = typeof(TEntity);
         if (_repositories.TryGetValue(type, out IRepository? repository))
-            return repository as IRepository<TEntity> ?? throw new Exception($"Could not cast repository to IRepository<{type}>");
+            return (TRepository)repository ?? throw new Exception($"Could not cast repository to IRepository<{type}>");
 
         repository = _repositoryFactory.GetRepository<TEntity>();
         _repositories.Add(type, repository);
-        return repository as IRepository<TEntity> ?? throw new Exception($"Could not cast repository to IRepository<{type}>");
+        return (TRepository)repository ?? throw new Exception($"Could not cast repository to IRepository<{type}>");
     }
 
     public async Task SaveChangesAsync()

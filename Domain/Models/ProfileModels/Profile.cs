@@ -33,10 +33,8 @@ public class Profile : Entity<Profile, ProfileStatus, ProfileEvent>
 
     public void Update(ProfileUpdateParams updateParams)
     {
-        TypeAdapter.Adapt(updateParams, this, ProfileUpdateParams.GetMappingConfig());
+        TypeAdapter.Adapt(updateParams, this, ProfileUpdateParams.MappingConfig);
     }
-
-    public void AddEvent(ProfileEvent profileEvent) => Events.Add(profileEvent);
 
     public void AddEvent(ProfileEventType eventType, string? addInfo = default) => AddEvent(ProfileEvent.Create(eventType, addInfo));
     #endregion

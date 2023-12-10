@@ -1,7 +1,6 @@
 ﻿using Application.Persistence.Repositories;
 using Domain.Models.BaseModels;
 using Extensions;
-using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;

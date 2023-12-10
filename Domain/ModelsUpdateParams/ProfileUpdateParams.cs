@@ -1,5 +1,4 @@
 ﻿using Domain.Models.ProfileModels;
-using Mapster;
 
 namespace Domain.ModelsUpdateParams;
 

@@ -1,6 +1,5 @@
-﻿namespace Application
+﻿namespace Application;
+
+public class Application
 {
-    public class Application
-    {
-    }
 }

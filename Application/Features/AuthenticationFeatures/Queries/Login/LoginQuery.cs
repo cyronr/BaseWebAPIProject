@@ -7,5 +7,5 @@ namespace Application.Features.AuthenticationFeatures.Queries.Login
     (
         string Email,
         string Password
-    ) : IRequest<AuthenticationResultDto>;
+    ) : IRequest<AuthenticationResult>;
 }

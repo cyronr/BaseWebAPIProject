@@ -1,8 +1,9 @@
-﻿namespace API.Requests.AuthenticationRequests
+﻿using WebAPI.Requests;
+
+namespace API.Requests.AuthenticationRequests;
+
+public record LoginRequest : BaseRequest
 {
-    public record LoginRequest
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
+    public string Email { get; set; }
+    public string Password { get; set; }
 }

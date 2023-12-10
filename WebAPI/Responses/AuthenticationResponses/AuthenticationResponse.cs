@@ -1,10 +1,9 @@
-﻿using Application.Features.AuthenticationFeatures.Common;
+﻿using WebAPI.Responses.AuthenticationResponses;
 
-namespace API.Requests.AuthenticationResponses
+namespace API.Requests.AuthenticationResponses;
+
+public record AuthenticationResponse
 {
-    public record AuthenticationResponse
-    {
-        public ProfileDto Profile { get; set; }
-        public string Token { get; set; }
-    }
+    public AuthenticationResponseProfile Profile { get; set; }
+    public string Token { get; set; }
 }

@@ -1,34 +1,23 @@
 ﻿using API.Requests.AuthenticationRequests;
 using API.Requests.AuthenticationResponses;
+using Application.Features.AuthenticationFeatures.Commands.CreateAdminProfile;
+using Application.Features.AuthenticationFeatures.Common;
 using Application.Features.AuthenticationFeatures.Queries.Login;
-using Application.Persistence;
-using Application.Persistence.Repositories;
-using AutoMapper;
-using Domain.Models.ProfileModels;
-using Domain.ModelsUpdateParams;
+using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-using Profile = Domain.Models.ProfileModels.Profile;
+using WebAPI.Requests.AuthenticationRequests;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController(ILogger<AuthenticationController> _logger, IMediator _mediator) : ControllerBase
 {
-    private readonly ILogger<AuthenticationController> _logger;
-    private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public AuthenticationController(ILogger<AuthenticationController> logger, IMediator mediator, IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        _logger = logger;
-        _mediator = mediator;
-        _mapper = mapper;
-        _unitOfWork = unitOfWork;
-    }
+    #region DI
+    private readonly ILogger<AuthenticationController> _logger = _logger;
+    private readonly IMediator _mediator = _mediator;
+    #endregion
 
     [HttpPost("login")]
     public async Task<ActionResult<AuthenticationResponse>> Login(LoginRequest request)
@@ -40,14 +29,18 @@ public class AuthenticationController : ControllerBase
 
         _logger.LogInformation($"{request.Email} logged with token {response}.");
 
-        return Ok(_mapper.Map<AuthenticationResponse>(response));
+        return Ok(response.Adapt<AuthenticationResponse>());
     }
 
-    [HttpPost("createProfile")]
-    public async Task<ActionResult> CreateProfile()
+    [HttpPost("register/admin")]
+    public async Task<ActionResult<AuthenticationResponse>> CreateAdminProfile(CreateAdminProfileRequest request)
     {
+        _logger.LogInformation("Creating admin profile. Request: {Request}", request.ToString());
 
+        CreateAdminProfileCommand command = request.Adapt<CreateAdminProfileCommand>();
+        AuthenticationResult response = await _mediator.Send(command);
 
-        return Ok();
+        _logger.LogInformation("Successfully created new profile for request: {Request}", request.ToString());
+        return Ok(response.Adapt<AuthenticationResponse>());
     }
 }
