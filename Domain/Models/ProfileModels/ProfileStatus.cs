@@ -1,5 +1,8 @@
 ﻿namespace Domain.Models.ProfileModels;
 
+/// <summary>
+/// Model used only to represent Profile status in database
+/// </summary>
 public class ProfileStatusModel
 {
     public int Id { get; set; }

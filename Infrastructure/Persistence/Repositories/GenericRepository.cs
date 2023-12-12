@@ -24,6 +24,12 @@ internal abstract class GenericRepository<TEntity> : IRepository<TEntity> where 
 
         return await query.FirstOrDefaultAsync(e => e.UUID == uuid);
     }
+    public async Task<TEntity?> GetByUUIDAsNoTrackingAsync(Guid uuid, Expression<Func<TEntity, bool>>? filter = null)
+    {
+        IQueryable<TEntity> query = _appDbContext.Set<TEntity>().ApplyFilter(filter);
+
+        return await query.AsNoTracking().FirstOrDefaultAsync(e => e.UUID == uuid);
+    }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter = null)
     {
@@ -36,4 +42,5 @@ internal abstract class GenericRepository<TEntity> : IRepository<TEntity> where 
     {
         await _appDbContext.Set<TEntity>().AddAsync(entity);
     }
+
 }

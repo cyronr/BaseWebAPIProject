@@ -29,16 +29,21 @@ public class CurrentLoggedProfile : ICurrentLoggedProfile
         LoadProfileInfo().GetAwaiter().GetResult();
     }
 
-    public async Task LoadProfileInfo()
+    private async Task LoadProfileInfo()
     {
         Claim? profileUuidClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
         if (!Guid.TryParse(profileUuidClaim?.Value, out Guid profileUuid))
             return;
 
         IProfileRepository profileRepository = _unitOfWork.GetRepository<Profile, IProfileRepository>();
-        Profile currentProfile = await profileRepository.GetByUUIDAsync(profileUuid)
+        Profile currentProfile = await profileRepository.GetByUUIDAsNoTrackingAsync(profileUuid)
             ?? throw new AuthenticationException("Incorrect authentication token.", $"Profile with UUID {profileUuid} does not exists.");
 
+        SetProfileProps(currentProfile);
+    }
+
+    private void SetProfileProps(Profile currentProfile)
+    {
         UUID = currentProfile.UUID;
         Email = currentProfile.Email;
         Type = currentProfile.Type;

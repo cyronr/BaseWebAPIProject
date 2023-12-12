@@ -1,14 +1,12 @@
-﻿using Application.Middleware;
-
-namespace WebAPI.ApplicationConfiguration;
+﻿namespace WebAPI.ApplicationConfiguration;
 
 internal static class ApplicationExtensions
 {
     public static WebApplication Configure(this WebApplication application)
     {
         application.AddSwagger();
-        application.AddMiddleware();
 
+        application.UseExceptionHandler(_ => { });
         application.UseHttpsRedirection();
         application.UseAuthentication();
         application.UseAuthorization();
@@ -27,13 +25,6 @@ internal static class ApplicationExtensions
             string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
             c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Sample API");
         });
-
-        return application;
-    }
-
-    private static WebApplication AddMiddleware(this WebApplication application)
-    {
-        application.UseMiddleware<ExceptionMiddleware>();
 
         return application;
     }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace Domain.Exceptions;
 
+/// <summary>
+/// Application AuthenticationException. Sets HttpStatusCode to Unauthorized (401)
+/// </summary>
 public class AuthenticationException : BaseException
 {
     public AuthenticationException() => SetProperties();

@@ -2,6 +2,9 @@ using System.Net;
 
 namespace Domain.Exceptions;
 
+/// <summary>
+/// Base application Exception. Every custom application Exception should inherit from it.
+/// </summary>
 public abstract class BaseException : Exception
 {
     public string Title { get; set; } = string.Empty;

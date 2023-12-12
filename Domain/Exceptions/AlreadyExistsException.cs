@@ -2,6 +2,9 @@ using System.Net;
 
 namespace Domain.Exceptions;
 
+/// <summary>
+/// Application AlreadyExistsException. Sets HttpStatusCode to Conflict (409)
+/// </summary>
 public class AlreadyExistsException : BaseException
 {
     public AlreadyExistsException() => SetProperties();

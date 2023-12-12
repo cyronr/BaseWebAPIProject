@@ -16,7 +16,7 @@ public interface IUnitOfWork : IDisposable
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <returns></returns>
-    //IRepository<TEntity> GetRepository<TEntity>() where TEntity : Entity;
+    IRepository<TEntity> GetRepository<TEntity>() where TEntity : Entity;
 
     /// <summary>
     /// Returns specific repository for Entity

@@ -2,6 +2,9 @@ using System.Net;
 
 namespace Domain.Exceptions;
 
+/// <summary>
+/// Application NotFoundException. Sets HttpStatusCode to NotFound (404)
+/// </summary>
 public class NotFoundException : BaseException
 {
     public NotFoundException() => SetProperties();

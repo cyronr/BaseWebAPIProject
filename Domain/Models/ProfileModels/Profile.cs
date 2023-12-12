@@ -16,6 +16,13 @@ public class Profile : Entity<Profile, ProfileStatus, ProfileEvent>
     private Profile() : base() { }
 
     #region public methods
+    /// <summary>
+    /// Creates Profile of given type with given email
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    /// <exception cref="Exceptions.InvalidDataException"></exception>
     public static Profile Create(string email, ProfileType type)
     {
         Profile profile = new Profile();
@@ -31,11 +38,20 @@ public class Profile : Entity<Profile, ProfileStatus, ProfileEvent>
         return profile;
     }
 
+    /// <summary>
+    /// Updates Profile properties
+    /// </summary>
+    /// <param name="updateParams"></param>
     public void Update(ProfileUpdateParams updateParams)
     {
         TypeAdapter.Adapt(updateParams, this, ProfileUpdateParams.MappingConfig);
     }
 
+    /// <summary>
+    /// Adds event to Profile events
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="addInfo"></param>
     public void AddEvent(ProfileEventType eventType, string? addInfo = default) => AddEvent(ProfileEvent.Create(eventType, addInfo));
     #endregion
 

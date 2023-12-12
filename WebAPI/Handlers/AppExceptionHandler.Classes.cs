@@ -1,19 +1,14 @@
 ﻿using Newtonsoft.Json;
 
-namespace Application.Middleware;
+namespace WebAPI.Handlers;
 
-public partial class ExceptionMiddleware
+internal partial class AppExceptionHandler
 {
-    private class ErrorDetails
+    private record ErrorDetails
     {
         public string Type { get; set; }
         public string Title { get; set; }
         public int Status { get; set; }
         public List<string> Errors { get; set; } = new List<string>();
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }

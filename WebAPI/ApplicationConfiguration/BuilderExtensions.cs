@@ -1,5 +1,4 @@
 ﻿using Application;
-using Application.Middleware;
 using Domain;
 using FluentValidation;
 using Infrastructure;
@@ -10,6 +9,7 @@ using Serilog;
 using Serilog.Core;
 using Swashbuckle.AspNetCore.Filters;
 using WebAPI.ApplicationConfiguration;
+using WebAPI.Handlers;
 
 namespace WebAPI.ApplicationConfiguration;
 
@@ -23,6 +23,8 @@ internal static class BuilderExtensions
         builder.AddAuthentication();
         builder.AddCors();
         builder.AddDependencyProjects();
+
+        builder.Services.AddExceptionHandler<AppExceptionHandler>();
 
         builder.Services.AddControllers();
         builder.Services.AddHttpContextAccessor();

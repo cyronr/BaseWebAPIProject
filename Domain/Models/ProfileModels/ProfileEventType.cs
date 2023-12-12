@@ -1,5 +1,8 @@
 ﻿namespace Domain.Models.ProfileModels;
 
+/// <summary>
+/// Model used only to represent Profile event type in database
+/// </summary>
 public class ProfileEventTypeModel
 {
     public int Id { get; set; }
