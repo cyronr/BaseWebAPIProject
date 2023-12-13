@@ -1,9 +1,11 @@
-﻿using Application.Common.Http;
+﻿using Application.Common;
+using Application.Common.Http;
 using Application.Common.MessageSenders;
 using Application.Persistence;
 using Application.Persistence.Repositories;
 using Application.Services;
 using Domain.Models.ProfileModels;
+using Infrastructure.Common;
 using Infrastructure.Common.Classes;
 using Infrastructure.Common.Http;
 using Infrastructure.Common.MessageSenders;
@@ -51,6 +53,8 @@ public static class DependencyInjection
 
     private static IServiceCollection ConfigureCommonDependencyInjection(this IServiceCollection services)
     {
+        services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
         services.AddSingleton<IHttpRequester, HttpRequester>();
         services.AddSingleton<IEmailSender, EmailSender>();
 

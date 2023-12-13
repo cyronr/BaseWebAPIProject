@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231129172149_ProfilesFixes")]
-    partial class ProfilesFixes
+    [Migration("20231213192751_AddProfiles")]
+    partial class AddProfiles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("UUID")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("UnsuccessfulLoginAttemptsCount")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Profiles");
@@ -73,7 +76,6 @@ namespace Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AddInfo")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("ProfileId")
@@ -90,106 +92,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ProfileId");
 
                     b.ToTable("ProfileEvents");
-                });
-
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileEventTypeModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProfileEventType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Created"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Updated"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Deleted"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileStatusModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProfileStatus");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Prepared"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Active"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Locked"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Deleted"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Models.ProfileModels.ProfileTypeModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProfileType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Models.ProfileModels.ProfileEvent", b =>

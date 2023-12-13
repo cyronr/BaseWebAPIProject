@@ -27,7 +27,7 @@ internal class CreateAdminProfileCommandHandler(ILogger<CreateAdminProfileComman
     {
         IProfileRepository profileRepository = _unitOfWork.GetRepository<Profile, IProfileRepository>();
 
-        if (await profileRepository.GetByEmailAsync(request.Email) is not null)
+        if (await profileRepository.GetByEmailAsNoTrackingAsync(request.Email) is not null)
             throw new AlreadyExistsException($"Profile with email {request.Email} already exists.");
 
         Profile profile = Profile.Create(request.Email, ProfileType.Admin);

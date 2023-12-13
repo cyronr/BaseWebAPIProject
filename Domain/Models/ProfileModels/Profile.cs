@@ -7,11 +7,14 @@ namespace Domain.Models.ProfileModels;
 
 public class Profile : Entity<Profile, ProfileStatus, ProfileEvent>
 {
+    /// <summary> Profile type (eg. Admin) </summary>
     public ProfileType Type { get; private set; }
     public string Email { get; private set; } = null!;
     public byte[] PasswordSalt { get; private set; } = null!;
     public byte[] PasswordHash { get; private set; } = null!;
     public string? PhoneNumber { get; private set; }
+    /// <summary> Unsuccesfull login attempts count since last succesful login </summary>
+    public int UnsuccessfulLoginAttemptsCount { get; private set; }
 
     private Profile() : base() { }
 
@@ -48,11 +51,27 @@ public class Profile : Entity<Profile, ProfileStatus, ProfileEvent>
     }
 
     /// <summary>
+    /// Increments Unsuccesfull login attempts count
+    /// </summary>
+    public void IncrementUnsuccessfulLoginAttemptsCount()
+    {
+        UnsuccessfulLoginAttemptsCount++;
+    }
+
+    /// <summary>
+    /// Resets Unsuccesfull login attempts count
+    /// </summary>
+    public void ResetUnsuccessfulLoginAttemptsCount()
+    {
+        UnsuccessfulLoginAttemptsCount = 0;
+    }
+
+    /// <summary>
     /// Adds event to Profile events
     /// </summary>
     /// <param name="eventType"></param>
     /// <param name="addInfo"></param>
-    public void AddEvent(ProfileEventType eventType, string? addInfo = default) => AddEvent(ProfileEvent.Create(eventType, addInfo));
+    public void AddEvent(ProfileEventType eventType, string? addInfo = default) => AddEvent(ProfileEvent.Create(this, eventType, addInfo));
     #endregion
 
     #region private methods

@@ -1,9 +1,8 @@
 ﻿using Domain.Models.ProfileModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection.Emit;
 
-namespace Infrastructure.Data.Configuration.ProfileConfigurations;
+namespace Infrastructure.Configuration;
 
 public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
 {
@@ -11,9 +10,5 @@ public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
     {
         builder.Property(p => p.Email).HasMaxLength(150);
         builder.Property(p => p.PhoneNumber).HasMaxLength(20);
-
-        builder.HasMany(p => p.Events)
-            .WithOne()
-            .IsRequired();
     }
 }

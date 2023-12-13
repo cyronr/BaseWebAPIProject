@@ -2,7 +2,7 @@
 
 namespace Application.Services.EntityBasicOperations;
 
-internal interface IEntityBasicOperations<TEntity> where TEntity : Entity
+internal interface IEntityBasicOperationsService<TEntity> where TEntity : Entity
 {
     /// <summary>
     /// Throws AlreadyExistsException if entity already exists in database
